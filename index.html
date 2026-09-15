@@ -1033,9 +1033,9 @@ body.win-reveal .stage{
 }
 @keyframes pointerPhysicalMobile{
   0%   {transform:rotate(0deg)}
-  30%  {transform:rotate(-14deg)}
-  55%  {transform:rotate(5deg)}
-  75%  {transform:rotate(-2deg)}
+  30%  {transform:rotate(-19deg)}
+  55%  {transform:rotate(7deg)}
+  75%  {transform:rotate(-3deg)}
   100% {transform:rotate(0deg)}
 }
 </style>
@@ -1069,14 +1069,14 @@ body{
 /* Aproxima mais o botão da roleta no mobile */
 @media(max-width:900px){
   .controls{
-    margin-top:6px !important;
-    gap:4px !important;
+    margin-top:10px !important;
+    gap:5px !important;
   }
 }
 @media(max-width:520px){
   .controls{
-    margin-top:4px !important;
-    gap:3px !important;
+    margin-top:8px !important;
+    gap:4px !important;
   }
   .main{
     padding-bottom:max(6px,var(--safe-bottom)) !important;
@@ -1179,7 +1179,7 @@ body.low-power.mobile-screen.spinning .winner-wedge{
     font-size:12px !important;
   }
   .controls{
-    margin-top:3px !important;
+    margin-top:5px !important;
   }
   .suspense{
     height:10px !important;
@@ -1190,6 +1190,94 @@ body.low-power.mobile-screen.spinning .winner-wedge{
 /* Crédito respeitando safe area */
 .developer-credit{
   bottom:max(6px,var(--safe-bottom)) !important;
+}
+</style>
+
+
+<style id="pointer-artifact-cleanup-v1">
+.pointer-piece{
+  overflow:hidden !important;
+  -webkit-clip-path:polygon(
+    23% 0%,
+    77% 0%,
+    94% 13%,
+    84% 31%,
+    50% 100%,
+    16% 31%,
+    6% 13%
+  ) !important;
+  clip-path:polygon(
+    23% 0%,
+    77% 0%,
+    94% 13%,
+    84% 31%,
+    50% 100%,
+    16% 31%,
+    6% 13%
+  ) !important;
+
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255,255,255,.88) 0 10%, transparent 34%),
+    linear-gradient(180deg,
+      rgba(255,255,255,.34) 0%,
+      rgba(255,241,189,.22) 18%,
+      rgba(255,191,69,.08) 54%,
+      rgba(120,60,0,.16) 100%),
+    linear-gradient(90deg,
+      #a86109 0%,
+      #e9a52d 18%,
+      #fff1ad 48%,
+      #efb13b 70%,
+      #9a5705 100%) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    inset 0 -7px 10px rgba(86,44,0,.18) !important;
+}
+
+/* remove as pseudo-camadas que podiam gerar o vestígio retangular em alguns celulares */
+.pointer-piece::before,
+.pointer-piece::after{
+  content:none !important;
+  display:none !important;
+}
+</style>
+
+
+<style id="pointer-ghost-definitive-fix">
+/* O container serve SOMENTE para posicionamento.
+   Nenhuma camada visual pode existir nele. */
+.pointer{
+  background:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+  clip-path:none !important;
+  -webkit-clip-path:none !important;
+  border:0 !important;
+  outline:0 !important;
+}
+
+/* Remove definitivamente resíduos dos estilos antigos do ponteiro. */
+.pointer::before,
+.pointer::after{
+  content:none !important;
+  display:none !important;
+  position:static !important;
+  width:0 !important;
+  height:0 !important;
+  inset:auto !important;
+  background:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+  opacity:0 !important;
+  clip-path:none !important;
+  -webkit-clip-path:none !important;
+}
+
+/* A única camada visual continua sendo a peça metálica real. */
+.pointer-piece{
+  isolation:isolate;
 }
 </style>
 
@@ -1392,7 +1480,7 @@ function fitLayout(){
   const safeBottom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-bottom')) || 0;
 
   const header = w<=520 ? 58 : w<=900 ? 68 : (h<=650 && w>=700 ? 56 : 80);
-  const controls = w<=520 ? 60 : w<=900 ? 76 : (h<=650 && w>=700 ? 58 : 98);
+  const controls = w<=520 ? 68 : w<=900 ? 84 : (h<=650 && w>=700 ? 58 : 98);
   const chrome = 16 + safeTop + safeBottom;
 
   const maxByH=Math.max(248,h-header-controls-chrome);
@@ -1434,20 +1522,20 @@ let pointerAnim=null;
 function pointerTick(speed=0){
   if(!pointerPiece) return;
 
-  // Quanto mais devagar a roleta, mais perceptível fica o "toc" mecânico.
+  // Movimento mais visível, sem perder coerência física.
   const fast = speed > 700;
   const verySlow = speed < 180;
-  const angle = verySlow ? -17 : fast ? -10 : -14;
-  const rebound = verySlow ? 6 : fast ? 3 : 5;
-  const duration = verySlow ? 160 : fast ? 112 : 145;
+  const angle = verySlow ? -22 : fast ? -13 : -18;
+  const rebound = verySlow ? 8 : fast ? 4 : 6;
+  const duration = verySlow ? 182 : fast ? 126 : 158;
 
   if(pointerPiece.animate){
     if(pointerAnim) pointerAnim.cancel();
     pointerAnim = pointerPiece.animate([
       {transform:'rotate(0deg)',offset:0},
-      {transform:`rotate(${angle}deg)`,offset:.30},
-      {transform:`rotate(${rebound}deg)`,offset:.56},
-      {transform:'rotate(-2deg)',offset:.77},
+      {transform:`rotate(${angle}deg)`,offset:.28},
+      {transform:`rotate(${rebound}deg)`,offset:.54},
+      {transform:'rotate(-3deg)',offset:.75},
       {transform:'rotate(0deg)',offset:1}
     ],{
       duration,
@@ -1457,7 +1545,7 @@ function pointerTick(speed=0){
     pointerPiece.classList.remove('css-tick');
     requestAnimationFrame(()=>{
       pointerPiece.classList.add('css-tick');
-      setTimeout(()=>pointerPiece.classList.remove('css-tick'),180);
+      setTimeout(()=>pointerPiece.classList.remove('css-tick'),200);
     });
   }
 
