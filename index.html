@@ -650,408 +650,21 @@ body.celebrate .win-card{animation:winPop .42s cubic-bezier(.2,.8,.2,1)}
 }
 </style>
 
-
-<style id="pointer-lights-fix">
-/* PONTEIRO — peça única */
-.pointer{
-  position:absolute !important;
-  left:50% !important;
-  top:-27px !important;
-  transform:translateX(-50%);
-  width:54px !important;
-  height:78px !important;
-  z-index:30 !important;
-  transform-origin:50% 16% !important;
-  filter:
-    drop-shadow(0 11px 13px rgba(0,0,0,.42))
-    drop-shadow(0 0 8px rgba(255,185,60,.22)) !important;
-
-  /* Um único corpo metálico */
-  background:
-    linear-gradient(90deg,
-      #a86109 0%,
-      #e9a52d 18%,
-      #fff1ad 48%,
-      #efb13b 70%,
-      #9a5705 100%) !important;
-
-  clip-path:polygon(
-    23% 0%,
-    77% 0%,
-    94% 13%,
-    84% 31%,
-    50% 100%,
-    16% 31%,
-    6% 13%
-  );
-
-  border-radius:0 !important;
-}
-
-/* brilho interno da mesma peça — não cria outro ícone */
-.pointer::before{
-  content:"";
-  position:absolute;
-  inset:5px 7px 8px;
-  clip-path:inherit;
-  background:
-    linear-gradient(180deg,
-      rgba(255,255,255,.86) 0%,
-      rgba(255,238,173,.72) 18%,
-      rgba(255,185,53,.18) 55%,
-      rgba(132,67,0,.12) 100%);
-  pointer-events:none;
-}
-
-.pointer::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:7px;
-  width:28px;
-  height:6px;
-  transform:translateX(-50%);
-  border-radius:999px;
-  background:rgba(255,255,255,.64);
-  filter:blur(1px);
-  pointer-events:none;
-}
-
-.pointer.tick{
-  animation:pointerTickSingle .09s ease-out !important;
-}
-@keyframes pointerTickSingle{
-  0%{transform:translateX(-50%) rotate(0deg)}
-  38%{transform:translateX(-50%) rotate(-7deg)}
-  68%{transform:translateX(-50%) rotate(2deg)}
-  100%{transform:translateX(-50%) rotate(0deg)}
-}
-
-/* LUZES FIXAS NO ARO */
-.rim-lights{
-  position:absolute !important;
-  inset:0 !important;
-  z-index:12 !important;
-  pointer-events:none !important;
-  transform:none !important;
-}
-
-.rim-lights .stud{
-  position:absolute;
-  width:15px !important;
-  height:15px !important;
-  margin:-7.5px !important;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 34% 28%,
-      #ffffff 0 10%,
-      #fff3bd 18%,
-      #ffd56b 39%,
-      #e39a20 68%,
-      #84510d 100%) !important;
-
-  border:1px solid rgba(255,236,173,.80);
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.38),
-    0 0 5px rgba(255,189,57,.35),
-    inset 0 1px 2px rgba(255,255,255,.80);
-
-  animation:rimLampBlink 1.55s ease-in-out infinite;
-}
-
-/* efeito sequencial tipo lâmpadas de roleta */
-.rim-lights .stud:nth-child(4n+1){animation-delay:0s}
-.rim-lights .stud:nth-child(4n+2){animation-delay:.22s}
-.rim-lights .stud:nth-child(4n+3){animation-delay:.44s}
-.rim-lights .stud:nth-child(4n+4){animation-delay:.66s}
-
-@keyframes rimLampBlink{
-  0%,100%{
-    transform:scale(.88);
-    filter:brightness(.75) saturate(.85);
-    box-shadow:
-      0 2px 8px rgba(0,0,0,.35),
-      0 0 4px rgba(255,181,44,.20),
-      inset 0 1px 2px rgba(255,255,255,.65);
-  }
-  45%,58%{
-    transform:scale(1.18);
-    filter:brightness(1.42) saturate(1.12);
-    box-shadow:
-      0 2px 8px rgba(0,0,0,.34),
-      0 0 9px rgba(255,215,107,.98),
-      0 0 18px rgba(255,155,20,.60),
-      inset 0 1px 2px rgba(255,255,255,.95);
-  }
-}
-
-/* durante o giro, a sequência de luzes acelera */
-body.spinning .rim-lights .stud{
-  animation-duration:.72s;
-}
-
-/* mobile/notebook */
-@media(max-width:900px){
-  .pointer{
-    top:-22px !important;
-    width:47px !important;
-    height:68px !important;
-  }
-  .rim-lights .stud{
-    width:12px !important;
-    height:12px !important;
-    margin:-6px !important;
-  }
-}
-@media(max-width:520px){
-  .pointer{
-    top:-18px !important;
-    width:41px !important;
-    height:59px !important;
-  }
-  .rim-lights .stud{
-    width:10px !important;
-    height:10px !important;
-    margin:-5px !important;
-  }
-}
-</style>
-
-
-<style id="winner-3s-highlight">
-body.win-reveal .stage{
-  animation:stageWinnerPulse .42s ease-in-out infinite alternate;
-}
-@keyframes stageWinnerPulse{
-  from{
-    filter:
-      drop-shadow(0 34px 42px rgba(0,0,0,.34))
-      drop-shadow(0 0 14px rgba(255,185,55,.18));
-  }
-  to{
-    filter:
-      drop-shadow(0 34px 42px rgba(0,0,0,.34))
-      drop-shadow(0 0 34px rgba(255,196,58,.48))
-      drop-shadow(0 0 58px rgba(20,126,255,.20));
-  }
-}
-</style>
-
-
-<style id="developer-credit-style">
-.developer-credit{
-  position:fixed;
-  left:50%;
-  bottom:6px;
-  transform:translateX(-50%);
-  z-index:18;
-  font-size:11px;
-  line-height:1;
-  letter-spacing:.02em;
-  color:rgba(255,255,255,.42);
-  white-space:nowrap;
-  pointer-events:none;
-  user-select:none;
-  text-shadow:0 2px 8px rgba(0,0,0,.25);
-}
-.developer-credit strong{
-  color:rgba(255,255,255,.64);
-  font-weight:700;
-}
-@media(max-width:520px){
-  .developer-credit{
-    bottom:4px;
-    font-size:9px;
-  }
-}
-@media(max-height:620px){
-  .developer-credit{
-    opacity:.55;
-    font-size:9px;
-  }
-}
-</style>
-
-
-<style id="mobile-fluidity-fixes">
-/* O rotor e os textos ficam em camadas compostas pela GPU. */
-.rotor{
-  will-change:transform;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  transform-style:preserve-3d;
-}
-.labels{
-  contain:layout style;
-}
-.prize-label{
-  transform:translate(-50%,-50%) rotate(var(--counter-rotation,0deg)) !important;
-  will-change:transform;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-}
-
-/* Durante o giro no mobile, preserva o visual mas corta os efeitos
-   mais caros de recalcular a cada frame. */
-@media(max-width:900px){
-  body.spinning .stage{
-    filter:drop-shadow(0 22px 30px rgba(0,0,0,.27)) !important;
-  }
-
-  body.spinning .outer-glow{
-    animation-play-state:paused !important;
-    filter:blur(7px) !important;
-    opacity:.56 !important;
-  }
-
-  body.spinning .ring{
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.72),
-      0 0 0 2px rgba(5,20,40,.94),
-      0 0 17px rgba(19,125,255,.16) !important;
-  }
-
-  /* Mantém as lâmpadas piscando, mas usa só opacity/scale no giro:
-     muito mais leve que animar vários filtros e box-shadows. */
-  body.spinning .rim-lights .stud{
-    filter:none !important;
-    animation-name:rimLampMobileSpin !important;
-    animation-duration:.72s !important;
-    box-shadow:
-      0 2px 7px rgba(0,0,0,.32),
-      0 0 7px rgba(255,205,88,.62),
-      inset 0 1px 2px rgba(255,255,255,.75) !important;
-  }
-}
-
-@keyframes rimLampMobileSpin{
-  0%,100%{opacity:.48;transform:scale(.88)}
-  50%{opacity:1;transform:scale(1.14)}
-}
-</style>
-
-
-<style id="pointer-mobile-definitive-fix">
-/* Container: fica 100% fixo e centralizado */
-.pointer{
-  position:absolute !important;
-  left:50% !important;
-  top:-18px !important;
-  width:41px !important;
-  height:59px !important;
-  transform:translateX(-50%) !important;
-  transform-origin:50% 0 !important;
-  z-index:30 !important;
-  background:none !important;
-  clip-path:none !important;
-  filter:none !important;
-  overflow:visible;
-}
-
-/* Peça visual única: é ela que balança */
-.pointer-piece{
-  position:absolute;
-  inset:0;
-  transform-origin:50% 12% !important;
-  will-change:transform;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-
-  background:
-    linear-gradient(90deg,
-      #a86109 0%,
-      #e9a52d 18%,
-      #fff1ad 48%,
-      #efb13b 70%,
-      #9a5705 100%);
-
-  clip-path:polygon(
-    23% 0%,
-    77% 0%,
-    94% 13%,
-    84% 31%,
-    50% 100%,
-    16% 31%,
-    6% 13%
-  );
-
-  filter:
-    drop-shadow(0 9px 11px rgba(0,0,0,.42))
-    drop-shadow(0 0 7px rgba(255,185,60,.24));
-}
-
-/* brilho pertencente à MESMA peça */
-.pointer-piece::before{
-  content:"";
-  position:absolute;
-  inset:4px 6px 7px;
-  clip-path:inherit;
-  background:
-    linear-gradient(180deg,
-      rgba(255,255,255,.88) 0%,
-      rgba(255,239,178,.70) 20%,
-      rgba(255,185,53,.16) 57%,
-      rgba(132,67,0,.12) 100%);
-  pointer-events:none;
-}
-
-.pointer-piece::after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:6px;
-  width:23px;
-  height:5px;
-  transform:translateX(-50%);
-  border-radius:999px;
-  background:rgba(255,255,255,.65);
-  filter:blur(.7px);
-  pointer-events:none;
-}
-
-/* Notebook/tablet */
-@media(min-width:521px) and (max-width:900px){
-  .pointer{
-    top:-22px !important;
-    width:47px !important;
-    height:68px !important;
-  }
-}
-
-/* Desktop */
-@media(min-width:901px){
-  .pointer{
-    top:-27px !important;
-    width:54px !important;
-    height:78px !important;
-  }
-}
-
-/* Fallback se Web Animations não existir */
-.pointer-piece.css-tick{
-  animation:pointerPhysicalMobile .14s cubic-bezier(.18,.7,.28,1);
-}
-@keyframes pointerPhysicalMobile{
-  0%   {transform:rotate(0deg)}
-  30%  {transform:rotate(-19deg)}
-  55%  {transform:rotate(7deg)}
-  75%  {transform:rotate(-3deg)}
-  100% {transform:rotate(0deg)}
-}
-</style>
-
-
-<style id="mobile-upgrades-v2">
+<style id="runtime-polish-v5">
+/* ============================================================
+   CAMADA FINAL CONSOLIDADA
+   Mantém a base visual e concentra apenas os ajustes posteriores.
+   ============================================================ */
 :root{
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-left: env(safe-area-inset-left, 0px);
-  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);
+  --safe-right:env(safe-area-inset-right,0px);
 }
 
 body{
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
 }
 
 .header{
@@ -1066,218 +679,213 @@ body{
   padding-right:max(8px,var(--safe-right));
 }
 
-/* Aproxima mais o botão da roleta no mobile */
-@media(max-width:900px){
-  .controls{
-    margin-top:10px !important;
-    gap:5px !important;
-  }
+/* GPU / rotação */
+.rotor{
+  will-change:transform;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  transform-style:preserve-3d;
 }
-@media(max-width:520px){
-  .controls{
-    margin-top:8px !important;
-    gap:4px !important;
-  }
-  .main{
-    padding-bottom:max(6px,var(--safe-bottom)) !important;
-  }
+.labels{contain:layout style}
+.prize-label{
+  transform:translate(-50%,-50%) rotate(var(--counter-rotation,0deg)) !important;
+  will-change:transform;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
 }
 
-/* Área de toque maior no centro sem aumentar visualmente a estrela */
-.hub{
-  isolation:isolate;
-}
-.hub::before{
-  content:"";
-  position:absolute;
-  inset:-14%;
-  border-radius:50%;
-  background:transparent;
-  z-index:-1;
-}
-
-/* Feedback visual no toque */
-.hub,
-.spin-btn,
-.config-trigger{
-  transition:transform .14s ease, filter .14s ease, box-shadow .18s ease, background .18s ease;
-}
-.hub.touch-press{
-  transform:translateZ(0) scale(.965) !important;
-  filter:brightness(1.06);
-}
-.spin-btn.touch-press,
-.config-trigger.touch-press{
-  transform:scale(.985) !important;
-}
-
-/* Mobile: botão de config totalmente compacto */
-@media(max-width:520px){
-  .config-trigger{
-    min-width:40px;
-    width:40px;
-    padding:0 !important;
-    justify-content:center;
-    gap:0;
-  }
-  .config-trigger span{
-    display:none !important;
-  }
-}
-
-/* Modal mais impactante no mobile */
-@media(max-width:520px){
-  .win-card{
-    width:min(94vw, 420px) !important;
-    padding:28px 18px 24px !important;
-    border-radius:24px !important;
-  }
-  .win-card h2{
-    font-size:24px !important;
-  }
-  .win-prize{
-    font-size:clamp(28px,8vw,36px) !important;
-  }
-}
-
-/* Se detectar aparelho mais fraco, reduz custo só em telas móveis */
-body.low-power.mobile-screen.spinning .outer-glow{
-  animation-play-state:paused !important;
-  opacity:.45 !important;
-  filter:blur(6px) !important;
-}
-body.low-power.mobile-screen.spinning .stage{
-  filter:drop-shadow(0 18px 25px rgba(0,0,0,.26)) !important;
-}
-body.low-power.mobile-screen.spinning .ring{
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.68),
-    0 0 0 2px rgba(5,20,40,.9),
-    0 0 14px rgba(19,125,255,.14) !important;
-}
-body.low-power.mobile-screen.spinning .winner-wedge{
-  filter:none !important;
-}
-
-/* Paisagem em celulares: aproveita melhor a altura reduzida */
-@media (max-width:900px) and (orientation:landscape){
-  .header{
-    height:54px !important;
-    padding-top:max(8px,var(--safe-top)) !important;
-    padding-bottom:6px !important;
-  }
-  .main{
-    height:calc(100dvh - 54px) !important;
-    padding-bottom:max(4px,var(--safe-bottom)) !important;
-  }
-  .brand-logo{
-    width:min(150px,28vw) !important;
-  }
-  .spin-btn{
-    height:42px !important;
-    min-width:170px !important;
-    font-size:12px !important;
-  }
-  .controls{
-    margin-top:5px !important;
-  }
-  .suspense{
-    height:10px !important;
-    font-size:9px !important;
-  }
-}
-
-/* Crédito respeitando safe area */
-.developer-credit{
-  bottom:max(6px,var(--safe-bottom)) !important;
-}
-</style>
-
-
-<style id="pointer-artifact-cleanup-v1">
-.pointer-piece{
-  overflow:hidden !important;
-  -webkit-clip-path:polygon(
-    23% 0%,
-    77% 0%,
-    94% 13%,
-    84% 31%,
-    50% 100%,
-    16% 31%,
-    6% 13%
-  ) !important;
-  clip-path:polygon(
-    23% 0%,
-    77% 0%,
-    94% 13%,
-    84% 31%,
-    50% 100%,
-    16% 31%,
-    6% 13%
-  ) !important;
-
-  background:
-    radial-gradient(circle at 50% 8%, rgba(255,255,255,.88) 0 10%, transparent 34%),
-    linear-gradient(180deg,
-      rgba(255,255,255,.34) 0%,
-      rgba(255,241,189,.22) 18%,
-      rgba(255,191,69,.08) 54%,
-      rgba(120,60,0,.16) 100%),
-    linear-gradient(90deg,
-      #a86109 0%,
-      #e9a52d 18%,
-      #fff1ad 48%,
-      #efb13b 70%,
-      #9a5705 100%) !important;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.34),
-    inset 0 -7px 10px rgba(86,44,0,.18) !important;
-}
-
-/* remove as pseudo-camadas que podiam gerar o vestígio retangular em alguns celulares */
-.pointer-piece::before,
-.pointer-piece::after{
-  content:none !important;
-  display:none !important;
-}
-</style>
-
-
-<style id="pointer-ghost-definitive-fix">
-/* O container serve SOMENTE para posicionamento.
-   Nenhuma camada visual pode existir nele. */
+/* Ponteiro: container invisível + uma única peça visual */
 .pointer{
+  position:absolute !important;
+  left:50% !important;
+  top:-27px !important;
+  width:54px !important;
+  height:78px !important;
+  transform:translateX(-50%) !important;
+  transform-origin:50% 0 !important;
+  z-index:30 !important;
+  overflow:visible !important;
   background:transparent !important;
   background-image:none !important;
   box-shadow:none !important;
   filter:none !important;
-  clip-path:none !important;
-  -webkit-clip-path:none !important;
   border:0 !important;
   outline:0 !important;
-}
-
-/* Remove definitivamente resíduos dos estilos antigos do ponteiro. */
-.pointer::before,
-.pointer::after{
-  content:none !important;
-  display:none !important;
-  position:static !important;
-  width:0 !important;
-  height:0 !important;
-  inset:auto !important;
-  background:none !important;
-  box-shadow:none !important;
-  filter:none !important;
-  opacity:0 !important;
   clip-path:none !important;
   -webkit-clip-path:none !important;
 }
-
-/* A única camada visual continua sendo a peça metálica real. */
+.pointer::before,.pointer::after,
+.pointer .cap,.pointer .tip{
+  content:none !important;
+  display:none !important;
+}
 .pointer-piece{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
   isolation:isolate;
+  transform-origin:50% 12%;
+  will-change:transform;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  -webkit-clip-path:polygon(23% 0%,77% 0%,94% 13%,84% 31%,50% 100%,16% 31%,6% 13%);
+  clip-path:polygon(23% 0%,77% 0%,94% 13%,84% 31%,50% 100%,16% 31%,6% 13%);
+  background:
+    radial-gradient(circle at 50% 8%,rgba(255,255,255,.88) 0 10%,transparent 34%),
+    linear-gradient(180deg,rgba(255,255,255,.34) 0%,rgba(255,241,189,.22) 18%,rgba(255,191,69,.08) 54%,rgba(120,60,0,.16) 100%),
+    linear-gradient(90deg,#a86109 0%,#e9a52d 18%,#fff1ad 48%,#efb13b 70%,#9a5705 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),inset 0 -7px 10px rgba(86,44,0,.18);
+  filter:drop-shadow(0 9px 11px rgba(0,0,0,.42)) drop-shadow(0 0 7px rgba(255,185,60,.24));
+}
+.pointer-piece::before,.pointer-piece::after{content:none !important;display:none !important}
+.pointer-piece.css-tick{animation:pointerPhysicalMobile .19s cubic-bezier(.18,.7,.28,1)}
+@keyframes pointerPhysicalMobile{
+  0%{transform:rotate(0deg)}
+  30%{transform:rotate(-22deg)}
+  55%{transform:rotate(8deg)}
+  75%{transform:rotate(-3deg)}
+  100%{transform:rotate(0deg)}
+}
+
+/* Luzes fixas no aro */
+.rim-lights{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:12 !important;
+  pointer-events:none !important;
+  transform:none !important;
+}
+.rim-lights .stud{
+  position:absolute;
+  width:15px !important;
+  height:15px !important;
+  margin:-7.5px !important;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,#fff 0 10%,#fff3bd 18%,#ffd56b 39%,#e39a20 68%,#84510d 100%) !important;
+  border:1px solid rgba(255,236,173,.8);
+  box-shadow:0 2px 8px rgba(0,0,0,.38),0 0 5px rgba(255,189,57,.35),inset 0 1px 2px rgba(255,255,255,.8);
+  animation:rimLampBlink 1.55s ease-in-out infinite;
+}
+@keyframes rimLampBlink{
+  0%,100%{transform:scale(.88);filter:brightness(.75) saturate(.85);box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 4px rgba(255,181,44,.2),inset 0 1px 2px rgba(255,255,255,.65)}
+  45%,58%{transform:scale(1.18);filter:brightness(1.42) saturate(1.12);box-shadow:0 2px 8px rgba(0,0,0,.34),0 0 9px rgba(255,215,107,.98),0 0 18px rgba(255,155,20,.6),inset 0 1px 2px rgba(255,255,255,.95)}
+}
+body.spinning .rim-lights .stud{animation-duration:.72s}
+@keyframes rimLampMobileSpin{
+  0%,100%{opacity:.48;transform:scale(.88)}
+  50%{opacity:1;transform:scale(1.14)}
+}
+
+/* Destaque vencedor */
+body.win-reveal .stage{animation:stageWinnerPulse .42s ease-in-out infinite alternate}
+@keyframes stageWinnerPulse{
+  from{filter:drop-shadow(0 34px 42px rgba(0,0,0,.34)) drop-shadow(0 0 14px rgba(255,185,55,.18))}
+  to{filter:drop-shadow(0 34px 42px rgba(0,0,0,.34)) drop-shadow(0 0 34px rgba(255,196,58,.48)) drop-shadow(0 0 58px rgba(20,126,255,.2))}
+}
+
+/* Crédito */
+.developer-credit{
+  position:fixed;
+  left:50%;
+  bottom:max(6px,var(--safe-bottom));
+  transform:translateX(-50%);
+  z-index:18;
+  font-size:11px;
+  line-height:1;
+  letter-spacing:.02em;
+  color:rgba(255,255,255,.42);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+  text-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+.developer-credit strong{color:rgba(255,255,255,.64);font-weight:700}
+
+/* Área de toque / feedback */
+.hub{isolation:isolate}
+.hub::before{content:"";position:absolute;inset:-14%;border-radius:50%;background:transparent;z-index:-1}
+.hub,.spin-btn,.config-trigger{transition:transform .14s ease,filter .14s ease,box-shadow .18s ease,background .18s ease}
+.hub.touch-press{transform:translateZ(0) scale(.965) !important;filter:brightness(1.06)}
+.spin-btn.touch-press,.config-trigger.touch-press{transform:scale(.985) !important}
+
+@media(max-height:620px){.developer-credit{opacity:.55;font-size:9px}}
+
+@media(max-width:900px){
+  .pointer{top:-22px !important;width:47px !important;height:68px !important}
+  .rim-lights .stud{width:12px !important;height:12px !important;margin:-6px !important}
+  .controls{margin-top:10px !important;gap:5px !important}
+
+  body.spinning .ring{
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.72),0 0 0 2px rgba(5,20,40,.94),0 0 17px rgba(19,125,255,.16) !important;
+  }
+  body.spinning .rim-lights .stud{
+    animation-name:rimLampMobileSpin !important;
+    animation-duration:.72s !important;
+  }
+
+  body.mobile-screen.spinning .wheel-disk{
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 18px rgba(0,0,0,.16) !important;
+  }
+  body.mobile-screen.spinning .prize-label{will-change:auto !important}
+  body.mobile-screen.spinning .prize-icon,
+  body.mobile-screen.spinning .prize-text{text-shadow:none !important;filter:none !important}
+  body.mobile-screen.spinning .outer-glow{animation-play-state:paused !important;filter:blur(5px) !important;opacity:.46 !important}
+  body.mobile-screen.spinning .stage{filter:drop-shadow(0 18px 24px rgba(0,0,0,.25)) !important}
+  body.mobile-screen.spinning .rim-lights .stud{filter:none !important;box-shadow:0 1px 5px rgba(0,0,0,.28),0 0 6px rgba(255,205,88,.5) !important}
+  body.mobile-screen.spinning .pointer-piece{filter:drop-shadow(0 8px 9px rgba(0,0,0,.38)) drop-shadow(0 0 8px rgba(255,185,60,.3)) !important}
+
+  body.low-power.mobile-screen.spinning .outer-glow{opacity:.4 !important;filter:blur(4px) !important}
+  body.low-power.mobile-screen.spinning .stage{filter:drop-shadow(0 16px 21px rgba(0,0,0,.24)) !important}
+  body.low-power.mobile-screen.spinning .ring{box-shadow:inset 0 0 0 1px rgba(255,255,255,.64),0 0 0 2px rgba(5,20,40,.9),0 0 12px rgba(19,125,255,.12) !important}
+  body.low-power.mobile-screen.spinning .winner-wedge{filter:none !important}
+}
+
+@media(max-width:520px){
+  .pointer{top:-18px !important;width:41px !important;height:59px !important}
+  .rim-lights .stud{width:10px !important;height:10px !important;margin:-5px !important}
+  .controls{margin-top:8px !important;gap:4px !important}
+  .main{padding-bottom:max(6px,var(--safe-bottom)) !important}
+  .config-trigger{min-width:40px;width:40px;padding:0 !important;justify-content:center;gap:0}
+  .config-trigger span{display:none !important}
+  .win-card{width:min(94vw,420px) !important;padding:28px 18px 24px !important;border-radius:24px !important}
+  .win-card h2{font-size:24px !important}
+  .win-prize{font-size:clamp(28px,8vw,36px) !important}
+  .developer-credit{font-size:9px}
+}
+
+@media(max-width:900px) and (orientation:landscape){
+  .header{height:54px !important;padding-top:max(8px,var(--safe-top)) !important;padding-bottom:6px !important}
+  .main{height:calc(100dvh - 54px) !important;padding-bottom:max(4px,var(--safe-bottom)) !important}
+  .brand-logo{width:min(150px,28vw) !important}
+  .spin-btn{height:42px !important;min-width:170px !important;font-size:12px !important}
+  .controls{margin-top:5px !important}
+  .suspense{height:10px !important;font-size:9px !important}
+}
+</style>
+
+
+<style id="hub-touch-center-fix">
+/* Mantém SEMPRE a centralização do hub.
+   O feedback de toque reduz só a escala, sem perder translate(-50%,-50%). */
+.hub{
+  transform:translate(-50%,-50%) scale(1) !important;
+  transform-origin:center center !important;
+}
+
+.hub.touch-press{
+  transform:translate(-50%,-50%) scale(.965) !important;
+}
+
+/* Evita qualquer deslocamento interno do símbolo */
+.hub img{
+  display:block;
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) !important;
+  transform-origin:center center !important;
+  margin:0 !important;
+  pointer-events:none;
 }
 </style>
 
@@ -1373,25 +981,69 @@ const COLORS = [
 
 const $ = s => document.querySelector(s);
 const rotor = $('#rotor'), wheelDisk = $('#wheelDisk'), labels = $('#labels'), studs = $('#studs'), winnerWedge = $('#winnerWedge');
-const spinBtn = $('#spinBtn'), hubSpin = $('#hubSpin'), pointer = $('#pointer');
+const spinBtn = $('#spinBtn'), hubSpin = $('#hubSpin'), openConfigBtn = $('#openConfig'), pointer = $('#pointer'), pointerPiece = $('#pointerPiece');
 const configModal = $('#configModal'), winModal = $('#winModal'), editor = $('#editor');
 const suspense = $('#suspense'), lastResult = $('#lastResult'), winPrize = $('#winPrize');
 
 let prizes = loadPrizes();
+let editorDraft = null;
 let rotation = 0;
 let spinning = false;
+let resultPending = false;
+let revealTimer = 0;
 let lastBoundaryIndex = null;
 let currentSpeed = 0;
 
+// Ambiente mobile: usado só para otimização de animação e feedback tátil.
+const mobileRuntime =
+  window.matchMedia('(max-width:900px)').matches ||
+  navigator.maxTouchPoints > 0;
+
+if(mobileRuntime) document.body.classList.add('mobile-screen');
+
+const lowPowerRuntime =
+  mobileRuntime && (
+    (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4) ||
+    (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 6)
+  );
+
+if(lowPowerRuntime) document.body.classList.add('low-power');
+
+function vibrateSafe(pattern){
+  try{
+    if(mobileRuntime && navigator.vibrate){
+      navigator.vibrate(pattern);
+    }
+  }catch(e){}
+}
+
 function cloneDefaults(){ return DEFAULT_PRIZES.map(p=>({...p})); }
+function sanitizePrize(p,index=0){
+  const allowedTypes=new Set(['money','gift','food','surprise']);
+  const label=String(p?.label ?? `Prêmio ${index+1}`).trim().slice(0,34) || `Prêmio ${index+1}`;
+  const type=allowedTypes.has(p?.type) ? p.type : 'surprise';
+  const rawChance=Number(p?.chance);
+  const chance=Number.isFinite(rawChance) ? Math.min(1000,Math.max(.1,rawChance)) : 1;
+  return {label,type,chance};
+}
+function sanitizePrizeList(list){
+  if(!Array.isArray(list)) return cloneDefaults();
+  const clean=list.slice(0,12).map(sanitizePrize);
+  return clean.length>=2 ? clean : cloneDefaults();
+}
 function loadPrizes(){
   try{
-    const saved = JSON.parse(localStorage.getItem('unifahe_roleta_prizes_v3'));
-    if(Array.isArray(saved) && saved.length >= 2 && saved.length <= 12) return saved;
-  }catch(e){}
-  return cloneDefaults();
+    const raw=localStorage.getItem('unifahe_roleta_prizes_v3');
+    if(!raw) return cloneDefaults();
+    return sanitizePrizeList(JSON.parse(raw));
+  }catch(e){
+    return cloneDefaults();
+  }
 }
-function savePrizesLocal(){ localStorage.setItem('unifahe_roleta_prizes_v3', JSON.stringify(prizes)); }
+function savePrizesLocal(){
+  try{ localStorage.setItem('unifahe_roleta_prizes_v3',JSON.stringify(prizes)); }
+  catch(e){ console.warn('Não foi possível salvar a configuração local da roleta.'); }
+}
 function esc(s){ return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
 function normalizeDeg(v){ return ((v%360)+360)%360; }
 
@@ -1488,7 +1140,6 @@ function fitLayout(){
   const size=Math.floor(Math.min(maxByH,maxByW,900));
   document.documentElement.style.setProperty('--wheel-size',size+'px');
 }
-window.addEventListener('resize',fitLayout,{passive:true});
 
 function weightedDraw(){
   const weights=prizes.map(p=>Math.max(.01,Number(p.chance)||0));
@@ -1517,41 +1168,61 @@ function bindTouchFeedback(el){
   el.addEventListener('pointerleave', remove, {passive:true});
 }
 
-function setSpinning(v){ spinning=v; spinBtn.disabled=v; hubSpin.disabled=v; document.body.classList.toggle('spinning',v); }
+function updateInteractionState(){
+  const locked=spinning||resultPending;
+  spinBtn.disabled=locked;
+  hubSpin.disabled=locked;
+  openConfigBtn.disabled=locked;
+  document.body.classList.toggle('spinning',spinning);
+}
+function setSpinning(v){ spinning=v; updateInteractionState(); }
+function setResultPending(v){ resultPending=v; updateInteractionState(); }
 let pointerAnim=null;
+let lastPointerAnimationAt=0;
+
 function pointerTick(speed=0){
   if(!pointerPiece) return;
 
-  // Movimento mais visível, sem perder coerência física.
+  const now = performance.now();
   const fast = speed > 700;
   const verySlow = speed < 180;
-  const angle = verySlow ? -22 : fast ? -13 : -18;
-  const rebound = verySlow ? 8 : fast ? 4 : 6;
-  const duration = verySlow ? 182 : fast ? 126 : 158;
+
+  // No mobile o ponteiro precisa ser percebido, mas sem criar dezenas
+  // de animações simultâneas em alta velocidade.
+  const minGap = mobileRuntime
+    ? (fast ? 118 : verySlow ? 86 : 102)
+    : (fast ? 72 : 54);
+
+  if(now-lastPointerAnimationAt < minGap) return;
+  lastPointerAnimationAt = now;
+
+  const angle = verySlow ? -24 : fast ? -15 : -20;
+  const rebound = verySlow ? 9 : fast ? 5 : 7;
+  const duration = verySlow ? 190 : fast ? 138 : 165;
 
   if(pointerPiece.animate){
     if(pointerAnim) pointerAnim.cancel();
+
     pointerAnim = pointerPiece.animate([
-      {transform:'rotate(0deg)',offset:0},
-      {transform:`rotate(${angle}deg)`,offset:.28},
-      {transform:`rotate(${rebound}deg)`,offset:.54},
-      {transform:'rotate(-3deg)',offset:.75},
-      {transform:'rotate(0deg)',offset:1}
+      {transform:'rotate(0deg)', offset:0},
+      {transform:`rotate(${angle}deg)`, offset:.30},
+      {transform:`rotate(${rebound}deg)`, offset:.56},
+      {transform:'rotate(-3deg)', offset:.78},
+      {transform:'rotate(0deg)', offset:1}
     ],{
       duration,
-      easing:'cubic-bezier(.18,.72,.28,1)'
+      easing:'cubic-bezier(.16,.72,.22,1)',
+      fill:'none'
     });
   }else{
     pointerPiece.classList.remove('css-tick');
     requestAnimationFrame(()=>{
       pointerPiece.classList.add('css-tick');
-      setTimeout(()=>pointerPiece.classList.remove('css-tick'),200);
+      setTimeout(()=>pointerPiece.classList.remove('css-tick'),210);
     });
   }
 
-  if(verySlow){
-    vibrateSafe(10);
-  }
+  if(verySlow) vibrateSafe(10);
 }
 
 // Audio synced with wheel speed
@@ -1606,73 +1277,93 @@ function hideWinnerWedge(){
 }
 
 function spin(){
-  if(spinning||prizes.length<2)return;
-  ensureAudio(); startSpinSound(); hideWinnerWedge(); document.body.classList.remove('win-reveal'); setSpinning(true);
-  suspense.textContent='Girando';
-  const winner=weightedDraw(); const sector=360/prizes.length; const offset=nearEdgeOffset(sector);
-  const desired=normalizeDeg(-(winner*sector+offset)); const cur=normalizeDeg(rotation); let delta=desired-cur; if(delta<0)delta+=360;
-  const turns=7+Math.floor(Math.random()*3); const startRot=rotation; const target=rotation+turns*360+delta;
-  const distance=target-startRot; const duration=12200+Math.random()*1800; const start=performance.now();
-  let prevT=start,prevR=startRot;
-  lastBoundaryIndex=boundaryIndex(startRot);
-  let s1=false,s2=false,s3=false;
+  if(spinning||resultPending||prizes.length<2) return;
 
-  // Smartphones sofrem mais com criação de áudio/animations em alta frequência.
-  // Em baixa velocidade todos os "cliques" continuam acontecendo.
-  const mobilePerf = window.matchMedia('(max-width:900px)').matches || navigator.maxTouchPoints>0;
+  clearTimeout(revealTimer);
+  ensureAudio();
+  startSpinSound();
+  hideWinnerWedge();
+  document.body.classList.remove('win-reveal');
+  setSpinning(true);
+  suspense.textContent='Girando';
+
+  const winner=weightedDraw();
+  const prizeSnapshot={...prizes[winner]};
+  const sector=360/prizes.length;
+  const offset=nearEdgeOffset(sector);
+  const desired=normalizeDeg(-(winner*sector+offset));
+  const cur=normalizeDeg(rotation);
+  let delta=desired-cur;
+  if(delta<0) delta+=360;
+
+  const turns=7+Math.floor(Math.random()*3);
+  const startRot=rotation;
+  const target=rotation+turns*360+delta;
+  const distance=target-startRot;
+  const duration=12200+Math.random()*1800;
+  const start=performance.now();
+
+  let prevT=start;
+  let prevR=startRot;
   let lastAudioUpdate=start;
   let lastMechanicalTick=start;
-  let lastVisualPointerTick=start;
+  let lastVisualFrame=start-17;
+  let s1=false,s2=false,s3=false;
+  lastBoundaryIndex=boundaryIndex(startRot);
 
   function frame(now){
-    const t=Math.min(1,(now-start)/duration),e=easeOutQuart(t);
-    rotation=startRot+distance*e;
+    const t=Math.min(1,(now-start)/duration);
+    const e=easeOutQuart(t);
+    const calculatedRotation=startRot+distance*e;
+    const shouldPaint=!mobileRuntime || (now-lastVisualFrame>=16) || t>=1;
 
-    // translate3d mantém a transformação na camada de composição/GPU.
-    rotor.style.transform=`translate3d(0,0,0) rotate(${rotation}deg)`;
-    syncLabels(rotation);
+    if(shouldPaint){
+      rotation=calculatedRotation;
+      rotor.style.transform=`translate3d(0,0,0) rotate(${rotation}deg)`;
 
-    const dt=Math.max(1,now-prevT);
-    currentSpeed=Math.abs(rotation-prevR)/(dt/1000);
-    prevT=now;
-    prevR=rotation;
+      // No mobile, os textos acompanham o setor durante o giro.
+      // Ao parar, voltam para a orientação horizontal.
+      if(!mobileRuntime) syncLabels(rotation);
 
-    // O som contínuo não precisa ser recalculado 60/120 vezes por segundo.
-    const audioInterval = mobilePerf ? 46 : 28;
-    if(now-lastAudioUpdate>=audioInterval){
-      updateSpinSound(currentSpeed);
-      lastAudioUpdate=now;
-    }
+      const dt=Math.max(1,now-prevT);
+      currentSpeed=Math.abs(rotation-prevR)/(dt/1000);
+      prevT=now;
+      prevR=rotation;
+      lastVisualFrame=now;
 
-    const bi=boundaryIndex(rotation);
-    if(bi!==lastBoundaryIndex){
-      // Movimento visual e áudio têm limites separados.
-      // Assim o ponteiro continua balançando no mobile sem gerar áudio demais.
-      const visualGap = mobilePerf
-        ? (currentSpeed>900 ? 92 : currentSpeed>550 ? 78 : currentSpeed>280 ? 58 : 0)
-        : (currentSpeed>1200 ? 45 : 0);
+      const audioInterval=mobileRuntime?64:28;
+      if(now-lastAudioUpdate>=audioInterval){
+        updateSpinSound(currentSpeed);
+        lastAudioUpdate=now;
+      }
 
-      if(now-lastVisualPointerTick>=visualGap){
+      const bi=boundaryIndex(rotation);
+      if(bi!==lastBoundaryIndex){
+        // Uma única camada controla a frequência visual do ponteiro.
         pointerTick(currentSpeed);
-        lastVisualPointerTick=now;
+
+        const audioGap=mobileRuntime
+          ? (currentSpeed>900?110:currentSpeed>550?82:currentSpeed>280?55:0)
+          : (currentSpeed>1200?20:0);
+
+        if(now-lastMechanicalTick>=audioGap){
+          tickSound(currentSpeed);
+          lastMechanicalTick=now;
+        }
+        lastBoundaryIndex=bi;
       }
-
-      const audioGap = mobilePerf
-        ? (currentSpeed>900 ? 62 : currentSpeed>550 ? 46 : currentSpeed>280 ? 28 : 0)
-        : (currentSpeed>1200 ? 20 : 0);
-
-      if(now-lastMechanicalTick>=audioGap){
-        tickSound(currentSpeed);
-        lastMechanicalTick=now;
-      }
-
-      lastBoundaryIndex=bi;
+    }else{
+      rotation=calculatedRotation;
     }
+
     if(t>.66&&!s1){s1=true;suspense.textContent='Diminuindo'}
     if(t>.82&&!s2){s2=true;suspense.textContent='Quase parando'}
     if(t>.92&&!s3){s3=true;suspense.textContent='...'}
-    if(t<1) requestAnimationFrame(frame); else finish();
+
+    if(t<1) requestAnimationFrame(frame);
+    else finish();
   }
+
   function finish(){
     rotation=target;
     rotor.style.transform=`translate3d(0,0,0) rotate(${rotation}deg)`;
@@ -1680,19 +1371,24 @@ function spin(){
     updateSpinSound(0);
     stopSpinSound();
     suspense.textContent='';
-    const prize=prizes[winner];
-    lastResult.innerHTML=`Último prêmio: <strong>${esc(prize.label)}</strong>`;
+
+    lastResult.innerHTML=`Último prêmio: <strong>${esc(prizeSnapshot.label)}</strong>`;
+
+    // A roleta já parou, mas a interface fica bloqueada durante os 3s
+    // de destaque para impedir um segundo giro e resultados concorrentes.
+    setResultPending(true);
     setSpinning(false);
     showWinnerWedge(winner);
     document.body.classList.add('win-reveal');
 
-    // Suspense final: o setor vencedor pisca forte por 3 segundos.
-    setTimeout(()=>{
+    revealTimer=setTimeout(()=>{
       document.body.classList.remove('win-reveal');
       hideWinnerWedge();
-      showWin(prize);
+      setResultPending(false);
+      showWin(prizeSnapshot);
     },3000);
   }
+
   requestAnimationFrame(frame);
 }
 
@@ -1705,12 +1401,30 @@ function resizeConfetti(){
   confettiCanvas.height=Math.round(innerHeight*dpr);
   cctx.setTransform(dpr,0,0,dpr,0,0);
 }
-window.addEventListener('resize',resizeConfetti,{passive:true});resizeConfetti();
+resizeConfetti();
 function burstConfetti(){
-  particles=[]; const colors=['#ff6a00','#ffd15e','#0878ff','#56b9ff','#ffffff'];
+  particles=[];
+  const colors=['#ff6a00','#ffd15e','#0878ff','#56b9ff','#ffffff'];
+  const total=mobileRuntime?(lowPowerRuntime?72:110):150;
   const cx=innerWidth/2,cy=innerHeight*.35;
-  for(let i=0;i<150;i++) particles.push({x:cx+(Math.random()-.5)*90,y:cy+(Math.random()-.5)*35,vx:(Math.random()-.5)*13,vy:-4-Math.random()*10,g:.22+Math.random()*.12,r:Math.random()*360,vr:(Math.random()-.5)*18,w:5+Math.random()*6,h:9+Math.random()*9,c:colors[i%colors.length],life:80+Math.random()*45});
-  cancelAnimationFrame(confettiRAF); animateConfetti();
+
+  for(let i=0;i<total;i++){
+    particles.push({
+      x:cx+(Math.random()-.5)*90,
+      y:cy+(Math.random()-.5)*35,
+      vx:(Math.random()-.5)*(mobileRuntime?11:13),
+      vy:-4-Math.random()*(mobileRuntime?8:10),
+      g:.22+Math.random()*.12,
+      r:Math.random()*360,
+      vr:(Math.random()-.5)*18,
+      w:(mobileRuntime?6:5)+Math.random()*6,
+      h:(mobileRuntime?10:9)+Math.random()*9,
+      c:colors[i%colors.length],
+      life:(mobileRuntime?72:80)+Math.random()*(mobileRuntime?36:45)
+    });
+  }
+  cancelAnimationFrame(confettiRAF);
+  animateConfetti();
 }
 function animateConfetti(){
   cctx.clearRect(0,0,innerWidth,innerHeight); let alive=false;
@@ -1720,31 +1434,120 @@ function animateConfetti(){
 function showWin(prize){ winPrize.textContent=prize.label; document.body.classList.add('celebrate'); winModal.classList.add('show');winModal.setAttribute('aria-hidden','false'); vibrateSafe([60,35,90]); burstConfetti(); setTimeout(()=>document.body.classList.remove('celebrate'),2300); }
 
 function renderEditor(){
-  editor.innerHTML='';prizes.forEach((p,i)=>{
-    const row=document.createElement('div');row.className='row';row.innerHTML=`
+  const source=editorDraft ?? prizes;
+  editor.innerHTML='';
+  source.forEach((p,i)=>{
+    const row=document.createElement('div');
+    row.className='row';
+    row.innerHTML=`
       <input class="field name" value="${esc(p.label)}" maxlength="34" aria-label="Nome do prêmio">
       <select class="field type"><option value="money" ${p.type==='money'?'selected':''}>Dinheiro</option><option value="gift" ${p.type==='gift'?'selected':''}>Presente</option><option value="food" ${p.type==='food'?'selected':''}>Almoço</option><option value="surprise" ${p.type==='surprise'?'selected':''}>Surpresa</option></select>
       <input class="field chance" type="number" min="0.1" max="1000" step="0.1" value="${Number(p.chance)||1}" aria-label="Peso da chance">
-      <button class="remove" type="button" data-remove="${i}" aria-label="Remover">×</button>`;editor.appendChild(row);
-  }); updateTotal();
+      <button class="remove" type="button" data-remove="${i}" aria-label="Remover">×</button>`;
+    editor.appendChild(row);
+  });
+  updateTotal();
 }
-function collectEditor(){return [...editor.querySelectorAll('.row')].map(r=>({label:r.querySelector('.name').value.trim()||'Prêmio',type:r.querySelector('.type').value,chance:Math.max(.1,Number(r.querySelector('.chance').value)||1)}));}
-function updateTotal(){const vals=[...editor.querySelectorAll('.chance')].map(x=>Math.max(0,Number(x.value)||0)),total=vals.reduce((a,b)=>a+b,0);$('#totalChance').innerHTML=`Soma dos pesos: <strong>${total.toFixed(total%1?1:0)}</strong> · pesos maiores aumentam a probabilidade.`;}
 
-$('#openConfig').onclick=()=>{if(spinning)return;renderEditor();configModal.classList.add('show');configModal.setAttribute('aria-hidden','false')};
-$('#closeConfig').onclick=()=>{configModal.classList.remove('show');configModal.setAttribute('aria-hidden','true')};
-configModal.addEventListener('click',e=>{if(e.target===configModal)$('#closeConfig').click()});
+function collectEditor(){
+  return [...editor.querySelectorAll('.row')].map((r,i)=>sanitizePrize({
+    label:r.querySelector('.name').value,
+    type:r.querySelector('.type').value,
+    chance:r.querySelector('.chance').value
+  },i));
+}
+
+function updateTotal(){
+  const vals=[...editor.querySelectorAll('.chance')].map(x=>Math.max(0,Number(x.value)||0));
+  const total=vals.reduce((a,b)=>a+b,0);
+  $('#totalChance').innerHTML=`Soma dos pesos: <strong>${total.toFixed(total%1?1:0)}</strong> · pesos maiores aumentam a probabilidade.`;
+}
+
+openConfigBtn.onclick=()=>{
+  if(spinning||resultPending) return;
+  editorDraft=prizes.map(p=>({...p}));
+  renderEditor();
+  configModal.classList.add('show');
+  configModal.setAttribute('aria-hidden','false');
+};
+
+$('#closeConfig').onclick=()=>{
+  editorDraft=null;
+  configModal.classList.remove('show');
+  configModal.setAttribute('aria-hidden','true');
+};
+
+configModal.addEventListener('click',e=>{if(e.target===configModal) $('#closeConfig').click()});
 editor.addEventListener('input',updateTotal);
-editor.addEventListener('click',e=>{if(e.target.dataset.remove===undefined)return;if(editor.children.length<=2)return;prizes=collectEditor();prizes.splice(Number(e.target.dataset.remove),1);renderEditor()});
-$('#addPrize').onclick=()=>{prizes=collectEditor();if(prizes.length>=12)return;prizes.push({label:'Novo prêmio',type:'surprise',chance:10});renderEditor()};
-$('#resetPrizes').onclick=()=>{prizes=cloneDefaults();renderEditor()};
-$('#savePrizes').onclick=()=>{const next=collectEditor();if(next.length<2)return;prizes=next;savePrizesLocal();buildWheel();$('#closeConfig').click()};
-$('#closeWin').onclick=()=>{winModal.classList.remove('show');winModal.setAttribute('aria-hidden','true');document.body.classList.remove('celebrate','win-reveal');hideWinnerWedge();cctx.clearRect(0,0,innerWidth,innerHeight)};
-winModal.addEventListener('click',e=>{if(e.target===winModal)$('#closeWin').click()});
-spinBtn.onclick=spin;hubSpin.onclick=spin;
-window.addEventListener('keydown',e=>{if(e.code==='Space'&&!configModal.classList.contains('show')&&!winModal.classList.contains('show')){e.preventDefault();spin()}if(e.key==='Escape'){$('#closeConfig').click();$('#closeWin').click()}});
 
-fitLayout();buildWheel();
+editor.addEventListener('click',e=>{
+  if(e.target.dataset.remove===undefined || editor.children.length<=2) return;
+  editorDraft=collectEditor();
+  editorDraft.splice(Number(e.target.dataset.remove),1);
+  renderEditor();
+});
+
+$('#addPrize').onclick=()=>{
+  editorDraft=collectEditor();
+  if(editorDraft.length>=12) return;
+  editorDraft.push({label:'Novo prêmio',type:'surprise',chance:10});
+  renderEditor();
+};
+
+$('#resetPrizes').onclick=()=>{
+  editorDraft=cloneDefaults();
+  renderEditor();
+};
+
+$('#savePrizes').onclick=()=>{
+  const next=sanitizePrizeList(collectEditor());
+  if(next.length<2) return;
+  prizes=next;
+  savePrizesLocal();
+  buildWheel();
+  $('#closeConfig').click();
+};
+
+$('#closeWin').onclick=()=>{
+  if(!winModal.classList.contains('show')) return;
+  winModal.classList.remove('show');
+  winModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('celebrate','win-reveal');
+  hideWinnerWedge();
+  cctx.clearRect(0,0,innerWidth,innerHeight);
+};
+
+winModal.addEventListener('click',e=>{if(e.target===winModal) $('#closeWin').click()});
+bindTouchFeedback(spinBtn);
+bindTouchFeedback(hubSpin);
+bindTouchFeedback(openConfigBtn);
+spinBtn.onclick=spin;
+hubSpin.onclick=spin;
+
+window.addEventListener('keydown',e=>{
+  if(e.code==='Space'&&!configModal.classList.contains('show')&&!winModal.classList.contains('show')&&!resultPending){
+    e.preventDefault();
+    spin();
+  }
+  if(e.key==='Escape'){
+    if(configModal.classList.contains('show')) $('#closeConfig').click();
+    if(winModal.classList.contains('show')) $('#closeWin').click();
+  }
+});
+
+let resizeRAF=0;
+function handleViewportResize(){
+  cancelAnimationFrame(resizeRAF);
+  resizeRAF=requestAnimationFrame(()=>{
+    fitLayout();
+    resizeConfetti();
+  });
+}
+window.addEventListener('resize',handleViewportResize,{passive:true});
+
+fitLayout();
+buildWheel();
+updateInteractionState();
 </script>
 
 <div class="developer-credit" aria-label="Crédito do desenvolvedor">
