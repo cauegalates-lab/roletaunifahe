@@ -889,6 +889,81 @@ body.win-reveal .stage{animation:stageWinnerPulse .42s ease-in-out infinite alte
 }
 </style>
 
+
+<style id="seller-voice-manual-v1">
+.seller-select-box{
+  width:min(310px,88vw);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 7px 5px 11px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:13px;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px rgba(0,0,0,.12);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.seller-select-box label{
+  flex:0 0 auto;
+  color:rgba(255,255,255,.48);
+  font-size:9px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.seller-select{
+  min-width:0;
+  width:100%;
+  height:32px;
+  border:0;
+  outline:0;
+  border-radius:9px;
+  padding:0 30px 0 9px;
+  background-color:rgba(5,23,48,.72);
+  color:#fff;
+  font:inherit;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.seller-select:focus{
+  box-shadow:0 0 0 2px rgba(62,153,221,.26);
+}
+.seller-select option{
+  background:#0b2545;
+  color:#fff;
+}
+.seller-select-box.selected{
+  border-color:rgba(62,153,221,.30);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 0 18px rgba(62,153,221,.08);
+}
+.seller-select-box.attention{
+  animation:sellerSelectAttention .52s ease 2;
+}
+@keyframes sellerSelectAttention{
+  0%,100%{transform:translateY(0);border-color:rgba(255,255,255,.12)}
+  50%{transform:translateY(-2px);border-color:rgba(255,127,32,.55)}
+}
+@media(max-width:520px){
+  .seller-select-box{
+    width:min(292px,88vw);
+    padding:4px 6px 4px 9px;
+    border-radius:12px;
+  }
+  .seller-select{
+    height:31px;
+    font-size:11px;
+  }
+  .seller-select-box label{
+    font-size:8px;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -917,6 +992,44 @@ body.win-reveal .stage{animation:stageWinnerPulse .42s ease-in-out infinite alte
     </section>
 
     <div class="controls">
+      <div class="seller-select-box">
+        <label for="sellerSelect">Vendedor</label>
+        <select id="sellerSelect" class="seller-select" aria-label="Selecionar vendedor">
+          <option value="">Selecione o vendedor</option>
+          <option value="Alana Santos">Alana Santos</option>
+          <option value="Ana Luiza">Ana Luiza</option>
+          <option value="Beatriz Cunha">Beatriz Cunha</option>
+          <option value="Bruna Moraes">Bruna Moraes</option>
+          <option value="Cauê Galates">Cauê Galates</option>
+          <option value="Camilly Longhi">Camilly Longhi</option>
+          <option value="Daniela Moura">Daniela Moura</option>
+          <option value="Fabiana Godoy">Fabiana Godoy</option>
+          <option value="Gabriel Gorgonio">Gabriel Gorgonio</option>
+          <option value="Gabrielle Andrade">Gabrielle Andrade</option>
+          <option value="Giseli de Jesus">Giseli de Jesus</option>
+          <option value="Lara Baptista">Lara Baptista</option>
+          <option value="Letícia Goretti">Letícia Goretti</option>
+          <option value="Leticia Pereira">Leticia Pereira</option>
+          <option value="Letícia Vieira">Letícia Vieira</option>
+          <option value="Lucas Eduardo">Lucas Eduardo</option>
+          <option value="Maria Laura">Maria Laura</option>
+          <option value="Nathália">Nathália</option>
+          <option value="Raíssa Fontoura">Raíssa Fontoura</option>
+          <option value="Ana Kelly">Ana Kelly</option>
+          <option value="Rodolfo Henrique">Rodolfo Henrique</option>
+          <option value="Kevin Cristovão">Kevin Cristovão</option>
+          <option value="Melissa Ferreira">Melissa Ferreira</option>
+          <option value="Nícolas">Nícolas</option>
+          <option value="Vinicius Ribeiro">Vinicius Ribeiro</option>
+          <option value="Gabrielle Carvalho">Gabrielle Carvalho</option>
+          <option value="Paola Fernandes">Paola Fernandes</option>
+          <option value="Jane menezes">Jane menezes</option>
+          <option value="Estephany">Estephany</option>
+          <option value="Chrystian">Chrystian</option>
+          <option value="Carliane">Carliane</option>
+          <option value="Gabriela Neves">Gabriela Neves</option>
+        </select>
+      </div>
       <button class="spin-btn" id="spinBtn" type="button">⟳&nbsp;&nbsp; GIRAR ROLETA</button>
       <div class="last-result" id="lastResult">Último prêmio: <strong>—</strong></div>
       <div class="suspense" id="suspense"></div>
@@ -984,6 +1097,7 @@ const rotor = $('#rotor'), wheelDisk = $('#wheelDisk'), labels = $('#labels'), s
 const spinBtn = $('#spinBtn'), hubSpin = $('#hubSpin'), openConfigBtn = $('#openConfig'), pointer = $('#pointer'), pointerPiece = $('#pointerPiece');
 const configModal = $('#configModal'), winModal = $('#winModal'), editor = $('#editor');
 const suspense = $('#suspense'), lastResult = $('#lastResult'), winPrize = $('#winPrize');
+const sellerSelect = $('#sellerSelect'), sellerSelectBox = sellerSelect.closest('.seller-select-box');
 
 let prizes = loadPrizes();
 let editorDraft = null;
@@ -993,6 +1107,8 @@ let resultPending = false;
 let revealTimer = 0;
 let lastBoundaryIndex = null;
 let currentSpeed = 0;
+let currentSeller = '';
+let currentRoundSeller = '';
 
 // Ambiente mobile: usado só para otimização de animação e feedback tátil.
 const mobileRuntime =
@@ -1126,13 +1242,80 @@ function syncLabels(rot){
   labels.style.setProperty('--counter-rotation',`${-rot}deg`);
 }
 
+
+function getPreferredPtVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const voices=window.speechSynthesis.getVoices()||[];
+  return (
+    voices.find(v=>/^pt-BR$/i.test(v.lang)) ||
+    voices.find(v=>/^pt/i.test(v.lang)) ||
+    null
+  );
+}
+
+function speakText(text,{rate=.95,pitch=1,volume=1}={}){
+  if(!text || !('speechSynthesis' in window)) return;
+
+  try{
+    window.speechSynthesis.cancel();
+
+    const utterance=new SpeechSynthesisUtterance(text);
+    utterance.lang='pt-BR';
+    utterance.rate=rate;
+    utterance.pitch=pitch;
+    utterance.volume=volume;
+
+    const voice=getPreferredPtVoice();
+    if(voice) utterance.voice=voice;
+
+    window.speechSynthesis.speak(utterance);
+  }catch(e){}
+}
+
+function prizeLabelForSpeech(label){
+  const text=String(label||'').trim();
+  const money=text.match(/^R\$\s*([\d.,]+)/i);
+  if(money){
+    const numeric=money[1].replace(/\./g,'').replace(',','.');
+    const value=Number(numeric);
+    if(Number.isFinite(value)){
+      return `${value} reais`;
+    }
+  }
+  return text;
+}
+
+function announceSellerStart(name){
+  if(!name) return;
+  speakText(`${name}, boa sorte!`,{rate:.95,pitch:1.02});
+}
+
+function announceSellerWin(name,prizeLabel){
+  if(!name) return;
+  setTimeout(()=>{
+    speakText(
+      `Parabéns, ${name}! Você ganhou ${prizeLabelForSpeech(prizeLabel)}!`,
+      {rate:.93,pitch:1.03}
+    );
+  },420);
+}
+
+function updateSellerSelection(){
+  currentSeller=sellerSelect.value;
+  sellerSelectBox.classList.toggle('selected',!!currentSeller);
+  updateInteractionState();
+}
+
+sellerSelect.addEventListener('change',updateSellerSelection);
+
+
 function fitLayout(){
   const w=window.innerWidth,h=window.innerHeight;
   const safeTop = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-top')) || 0;
   const safeBottom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-bottom')) || 0;
 
   const header = w<=520 ? 58 : w<=900 ? 68 : (h<=650 && w>=700 ? 56 : 80);
-  const controls = w<=520 ? 68 : w<=900 ? 84 : (h<=650 && w>=700 ? 58 : 98);
+  const controls = w<=520 ? 112 : w<=900 ? 126 : (h<=650 && w>=700 ? 98 : 142);
   const chrome = 16 + safeTop + safeBottom;
 
   const maxByH=Math.max(248,h-header-controls-chrome);
@@ -1170,9 +1353,13 @@ function bindTouchFeedback(el){
 
 function updateInteractionState(){
   const locked=spinning||resultPending;
-  spinBtn.disabled=locked;
-  hubSpin.disabled=locked;
+  const sellerMissing=!currentSeller;
+
+  spinBtn.disabled=locked||sellerMissing;
+  hubSpin.disabled=locked||sellerMissing;
   openConfigBtn.disabled=locked;
+  sellerSelect.disabled=locked;
+
   document.body.classList.toggle('spinning',spinning);
 }
 function setSpinning(v){ spinning=v; updateInteractionState(); }
@@ -1279,6 +1466,15 @@ function hideWinnerWedge(){
 function spin(){
   if(spinning||resultPending||prizes.length<2) return;
 
+  if(!currentSeller){
+    sellerSelectBox.classList.remove('attention');
+    void sellerSelectBox.offsetWidth;
+    sellerSelectBox.classList.add('attention');
+    suspense.textContent='Selecione o vendedor';
+    sellerSelect.focus();
+    return;
+  }
+
   clearTimeout(revealTimer);
   ensureAudio();
   startSpinSound();
@@ -1289,6 +1485,9 @@ function spin(){
 
   const winner=weightedDraw();
   const prizeSnapshot={...prizes[winner]};
+  const sellerSnapshot=currentSeller;
+  currentRoundSeller=sellerSnapshot;
+  announceSellerStart(sellerSnapshot);
   const sector=360/prizes.length;
   const offset=nearEdgeOffset(sector);
   const desired=normalizeDeg(-(winner*sector+offset));
@@ -1385,7 +1584,7 @@ function spin(){
       document.body.classList.remove('win-reveal');
       hideWinnerWedge();
       setResultPending(false);
-      showWin(prizeSnapshot);
+      showWin(prizeSnapshot,sellerSnapshot);
     },3000);
   }
 
@@ -1431,7 +1630,16 @@ function animateConfetti(){
   for(const p of particles){if(p.life<=0)continue;alive=true;p.life--;p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cctx.save();cctx.translate(p.x,p.y);cctx.rotate(p.r*Math.PI/180);cctx.fillStyle=p.c;cctx.globalAlpha=Math.min(1,p.life/24);cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cctx.restore();}
   if(alive) confettiRAF=requestAnimationFrame(animateConfetti); else cctx.clearRect(0,0,innerWidth,innerHeight);
 }
-function showWin(prize){ winPrize.textContent=prize.label; document.body.classList.add('celebrate'); winModal.classList.add('show');winModal.setAttribute('aria-hidden','false'); vibrateSafe([60,35,90]); burstConfetti(); setTimeout(()=>document.body.classList.remove('celebrate'),2300); }
+function showWin(prize,sellerName){
+  winPrize.textContent=prize.label;
+  document.body.classList.add('celebrate');
+  winModal.classList.add('show');
+  winModal.setAttribute('aria-hidden','false');
+  vibrateSafe([60,35,90]);
+  burstConfetti();
+  announceSellerWin(sellerName,prize.label);
+  setTimeout(()=>document.body.classList.remove('celebrate'),2300);
+}
 
 function renderEditor(){
   const source=editorDraft ?? prizes;
@@ -1515,6 +1723,12 @@ $('#closeWin').onclick=()=>{
   document.body.classList.remove('celebrate','win-reveal');
   hideWinnerWedge();
   cctx.clearRect(0,0,innerWidth,innerHeight);
+
+  currentSeller='';
+  currentRoundSeller='';
+  sellerSelect.value='';
+  sellerSelectBox.classList.remove('selected');
+  updateInteractionState();
 };
 
 winModal.addEventListener('click',e=>{if(e.target===winModal) $('#closeWin').click()});
@@ -1547,6 +1761,7 @@ window.addEventListener('resize',handleViewportResize,{passive:true});
 
 fitLayout();
 buildWheel();
+updateSellerSelection();
 updateInteractionState();
 </script>
 
