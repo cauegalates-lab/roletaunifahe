@@ -930,6 +930,269 @@ body.win-reveal .stage{
 }
 </style>
 
+
+<style id="pointer-mobile-definitive-fix">
+/* Container: fica 100% fixo e centralizado */
+.pointer{
+  position:absolute !important;
+  left:50% !important;
+  top:-18px !important;
+  width:41px !important;
+  height:59px !important;
+  transform:translateX(-50%) !important;
+  transform-origin:50% 0 !important;
+  z-index:30 !important;
+  background:none !important;
+  clip-path:none !important;
+  filter:none !important;
+  overflow:visible;
+}
+
+/* Peça visual única: é ela que balança */
+.pointer-piece{
+  position:absolute;
+  inset:0;
+  transform-origin:50% 12% !important;
+  will-change:transform;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+
+  background:
+    linear-gradient(90deg,
+      #a86109 0%,
+      #e9a52d 18%,
+      #fff1ad 48%,
+      #efb13b 70%,
+      #9a5705 100%);
+
+  clip-path:polygon(
+    23% 0%,
+    77% 0%,
+    94% 13%,
+    84% 31%,
+    50% 100%,
+    16% 31%,
+    6% 13%
+  );
+
+  filter:
+    drop-shadow(0 9px 11px rgba(0,0,0,.42))
+    drop-shadow(0 0 7px rgba(255,185,60,.24));
+}
+
+/* brilho pertencente à MESMA peça */
+.pointer-piece::before{
+  content:"";
+  position:absolute;
+  inset:4px 6px 7px;
+  clip-path:inherit;
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,.88) 0%,
+      rgba(255,239,178,.70) 20%,
+      rgba(255,185,53,.16) 57%,
+      rgba(132,67,0,.12) 100%);
+  pointer-events:none;
+}
+
+.pointer-piece::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:6px;
+  width:23px;
+  height:5px;
+  transform:translateX(-50%);
+  border-radius:999px;
+  background:rgba(255,255,255,.65);
+  filter:blur(.7px);
+  pointer-events:none;
+}
+
+/* Notebook/tablet */
+@media(min-width:521px) and (max-width:900px){
+  .pointer{
+    top:-22px !important;
+    width:47px !important;
+    height:68px !important;
+  }
+}
+
+/* Desktop */
+@media(min-width:901px){
+  .pointer{
+    top:-27px !important;
+    width:54px !important;
+    height:78px !important;
+  }
+}
+
+/* Fallback se Web Animations não existir */
+.pointer-piece.css-tick{
+  animation:pointerPhysicalMobile .14s cubic-bezier(.18,.7,.28,1);
+}
+@keyframes pointerPhysicalMobile{
+  0%   {transform:rotate(0deg)}
+  30%  {transform:rotate(-14deg)}
+  55%  {transform:rotate(5deg)}
+  75%  {transform:rotate(-2deg)}
+  100% {transform:rotate(0deg)}
+}
+</style>
+
+
+<style id="mobile-upgrades-v2">
+:root{
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+body{
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.header{
+  padding-top:max(10px,var(--safe-top));
+  padding-left:max(14px,var(--safe-left));
+  padding-right:max(14px,var(--safe-right));
+}
+
+.main{
+  padding-bottom:max(10px,var(--safe-bottom));
+  padding-left:max(8px,var(--safe-left));
+  padding-right:max(8px,var(--safe-right));
+}
+
+/* Aproxima mais o botão da roleta no mobile */
+@media(max-width:900px){
+  .controls{
+    margin-top:6px !important;
+    gap:4px !important;
+  }
+}
+@media(max-width:520px){
+  .controls{
+    margin-top:4px !important;
+    gap:3px !important;
+  }
+  .main{
+    padding-bottom:max(6px,var(--safe-bottom)) !important;
+  }
+}
+
+/* Área de toque maior no centro sem aumentar visualmente a estrela */
+.hub{
+  isolation:isolate;
+}
+.hub::before{
+  content:"";
+  position:absolute;
+  inset:-14%;
+  border-radius:50%;
+  background:transparent;
+  z-index:-1;
+}
+
+/* Feedback visual no toque */
+.hub,
+.spin-btn,
+.config-trigger{
+  transition:transform .14s ease, filter .14s ease, box-shadow .18s ease, background .18s ease;
+}
+.hub.touch-press{
+  transform:translateZ(0) scale(.965) !important;
+  filter:brightness(1.06);
+}
+.spin-btn.touch-press,
+.config-trigger.touch-press{
+  transform:scale(.985) !important;
+}
+
+/* Mobile: botão de config totalmente compacto */
+@media(max-width:520px){
+  .config-trigger{
+    min-width:40px;
+    width:40px;
+    padding:0 !important;
+    justify-content:center;
+    gap:0;
+  }
+  .config-trigger span{
+    display:none !important;
+  }
+}
+
+/* Modal mais impactante no mobile */
+@media(max-width:520px){
+  .win-card{
+    width:min(94vw, 420px) !important;
+    padding:28px 18px 24px !important;
+    border-radius:24px !important;
+  }
+  .win-card h2{
+    font-size:24px !important;
+  }
+  .win-prize{
+    font-size:clamp(28px,8vw,36px) !important;
+  }
+}
+
+/* Se detectar aparelho mais fraco, reduz custo só em telas móveis */
+body.low-power.mobile-screen.spinning .outer-glow{
+  animation-play-state:paused !important;
+  opacity:.45 !important;
+  filter:blur(6px) !important;
+}
+body.low-power.mobile-screen.spinning .stage{
+  filter:drop-shadow(0 18px 25px rgba(0,0,0,.26)) !important;
+}
+body.low-power.mobile-screen.spinning .ring{
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.68),
+    0 0 0 2px rgba(5,20,40,.9),
+    0 0 14px rgba(19,125,255,.14) !important;
+}
+body.low-power.mobile-screen.spinning .winner-wedge{
+  filter:none !important;
+}
+
+/* Paisagem em celulares: aproveita melhor a altura reduzida */
+@media (max-width:900px) and (orientation:landscape){
+  .header{
+    height:54px !important;
+    padding-top:max(8px,var(--safe-top)) !important;
+    padding-bottom:6px !important;
+  }
+  .main{
+    height:calc(100dvh - 54px) !important;
+    padding-bottom:max(4px,var(--safe-bottom)) !important;
+  }
+  .brand-logo{
+    width:min(150px,28vw) !important;
+  }
+  .spin-btn{
+    height:42px !important;
+    min-width:170px !important;
+    font-size:12px !important;
+  }
+  .controls{
+    margin-top:3px !important;
+  }
+  .suspense{
+    height:10px !important;
+    font-size:9px !important;
+  }
+}
+
+/* Crédito respeitando safe area */
+.developer-credit{
+  bottom:max(6px,var(--safe-bottom)) !important;
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -948,7 +1211,7 @@ body.win-reveal .stage{
       <div class="outer-glow"></div>
       <div class="ring"></div>
       <div class="studs rim-lights" id="studs" aria-hidden="true"></div>
-      <div class="pointer" id="pointer" aria-hidden="true"></div>
+      <div class="pointer" id="pointer" aria-hidden="true"><div class="pointer-piece" id="pointerPiece"></div></div>
       <div class="rotor" id="rotor">
         <div class="wheel-disk" id="wheelDisk"></div>
         <div class="winner-wedge" id="winnerWedge" aria-hidden="true"></div>
@@ -1125,10 +1388,15 @@ function syncLabels(rot){
 
 function fitLayout(){
   const w=window.innerWidth,h=window.innerHeight;
+  const safeTop = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-top')) || 0;
+  const safeBottom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--safe-bottom')) || 0;
+
   const header = w<=520 ? 58 : w<=900 ? 68 : (h<=650 && w>=700 ? 56 : 80);
-  const controls = w<=520 ? 68 : w<=900 ? 84 : (h<=650 && w>=700 ? 62 : 98);
-  const maxByH=Math.max(248,h-header-controls-14);
-  const maxByW=w<=900 ? w*.94 : Math.min(w*.60,900);
+  const controls = w<=520 ? 60 : w<=900 ? 76 : (h<=650 && w>=700 ? 58 : 98);
+  const chrome = 16 + safeTop + safeBottom;
+
+  const maxByH=Math.max(248,h-header-controls-chrome);
+  const maxByW=w<=900 ? w*.955 : Math.min(w*.60,900);
   const size=Math.floor(Math.min(maxByH,maxByW,900));
   document.documentElement.style.setProperty('--wheel-size',size+'px');
 }
@@ -1149,19 +1417,52 @@ function nearEdgeOffset(sector){
 }
 function easeOutQuart(t){ return 1-Math.pow(1-t,4); }
 function boundaryIndex(rot){ const sector=360/prizes.length; return Math.floor(normalizeDeg(-rot+sector/2)/sector)%prizes.length; }
+
+function bindTouchFeedback(el){
+  if(!el) return;
+  const add=()=>el.classList.add('touch-press');
+  const remove=()=>el.classList.remove('touch-press');
+
+  el.addEventListener('pointerdown', add, {passive:true});
+  el.addEventListener('pointerup', remove, {passive:true});
+  el.addEventListener('pointercancel', remove, {passive:true});
+  el.addEventListener('pointerleave', remove, {passive:true});
+}
+
 function setSpinning(v){ spinning=v; spinBtn.disabled=v; hubSpin.disabled=v; document.body.classList.toggle('spinning',v); }
-function pointerTick(){
-  // Web Animations API evita forced reflow e deixa o ponteiro suave no mobile.
-  if(pointer.animate){
-    pointer.animate([
-      {transform:'translateX(-50%) rotate(0deg)'},
-      {transform:'translateX(-50%) rotate(-7deg)',offset:.38},
-      {transform:'translateX(-50%) rotate(2deg)',offset:.70},
-      {transform:'translateX(-50%) rotate(0deg)'}
+let pointerAnim=null;
+function pointerTick(speed=0){
+  if(!pointerPiece) return;
+
+  // Quanto mais devagar a roleta, mais perceptível fica o "toc" mecânico.
+  const fast = speed > 700;
+  const verySlow = speed < 180;
+  const angle = verySlow ? -17 : fast ? -10 : -14;
+  const rebound = verySlow ? 6 : fast ? 3 : 5;
+  const duration = verySlow ? 160 : fast ? 112 : 145;
+
+  if(pointerPiece.animate){
+    if(pointerAnim) pointerAnim.cancel();
+    pointerAnim = pointerPiece.animate([
+      {transform:'rotate(0deg)',offset:0},
+      {transform:`rotate(${angle}deg)`,offset:.30},
+      {transform:`rotate(${rebound}deg)`,offset:.56},
+      {transform:'rotate(-2deg)',offset:.77},
+      {transform:'rotate(0deg)',offset:1}
     ],{
-      duration:96,
-      easing:'ease-out'
+      duration,
+      easing:'cubic-bezier(.18,.72,.28,1)'
     });
+  }else{
+    pointerPiece.classList.remove('css-tick');
+    requestAnimationFrame(()=>{
+      pointerPiece.classList.add('css-tick');
+      setTimeout(()=>pointerPiece.classList.remove('css-tick'),180);
+    });
+  }
+
+  if(verySlow){
+    vibrateSafe(10);
   }
 }
 
@@ -1233,6 +1534,7 @@ function spin(){
   const mobilePerf = window.matchMedia('(max-width:900px)').matches || navigator.maxTouchPoints>0;
   let lastAudioUpdate=start;
   let lastMechanicalTick=start;
+  let lastVisualPointerTick=start;
 
   function frame(now){
     const t=Math.min(1,(now-start)/duration),e=easeOutQuart(t);
@@ -1256,15 +1558,26 @@ function spin(){
 
     const bi=boundaryIndex(rotation);
     if(bi!==lastBoundaryIndex){
-      const minTickGap = mobilePerf
-        ? (currentSpeed>900 ? 58 : currentSpeed>550 ? 42 : currentSpeed>280 ? 25 : 0)
-        : (currentSpeed>1200 ? 18 : 0);
+      // Movimento visual e áudio têm limites separados.
+      // Assim o ponteiro continua balançando no mobile sem gerar áudio demais.
+      const visualGap = mobilePerf
+        ? (currentSpeed>900 ? 92 : currentSpeed>550 ? 78 : currentSpeed>280 ? 58 : 0)
+        : (currentSpeed>1200 ? 45 : 0);
 
-      if(now-lastMechanicalTick>=minTickGap){
-        pointerTick();
+      if(now-lastVisualPointerTick>=visualGap){
+        pointerTick(currentSpeed);
+        lastVisualPointerTick=now;
+      }
+
+      const audioGap = mobilePerf
+        ? (currentSpeed>900 ? 62 : currentSpeed>550 ? 46 : currentSpeed>280 ? 28 : 0)
+        : (currentSpeed>1200 ? 20 : 0);
+
+      if(now-lastMechanicalTick>=audioGap){
         tickSound(currentSpeed);
         lastMechanicalTick=now;
       }
+
       lastBoundaryIndex=bi;
     }
     if(t>.66&&!s1){s1=true;suspense.textContent='Diminuindo'}
@@ -1316,7 +1629,7 @@ function animateConfetti(){
   for(const p of particles){if(p.life<=0)continue;alive=true;p.life--;p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cctx.save();cctx.translate(p.x,p.y);cctx.rotate(p.r*Math.PI/180);cctx.fillStyle=p.c;cctx.globalAlpha=Math.min(1,p.life/24);cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cctx.restore();}
   if(alive) confettiRAF=requestAnimationFrame(animateConfetti); else cctx.clearRect(0,0,innerWidth,innerHeight);
 }
-function showWin(prize){ winPrize.textContent=prize.label; document.body.classList.add('celebrate'); winModal.classList.add('show');winModal.setAttribute('aria-hidden','false');burstConfetti();setTimeout(()=>document.body.classList.remove('celebrate'),2300); }
+function showWin(prize){ winPrize.textContent=prize.label; document.body.classList.add('celebrate'); winModal.classList.add('show');winModal.setAttribute('aria-hidden','false'); vibrateSafe([60,35,90]); burstConfetti(); setTimeout(()=>document.body.classList.remove('celebrate'),2300); }
 
 function renderEditor(){
   editor.innerHTML='';prizes.forEach((p,i)=>{
